@@ -14,6 +14,9 @@ export class MyCard extends LitElement {
   constructor() {
     super();
     this.title = "My card";
+    this.imageurl = "#";
+    this.description = "#";
+    this.buttonlink = "#";
   }
 
   static get styles() {
@@ -21,16 +24,35 @@ export class MyCard extends LitElement {
       :host {
         display: block;
       }
+
+      button.btn:hover {
+        background-color: blue;
+        color: white;
+      }
     `;
   }
 
   render() {
-    return html`<div>${this.title}</div>`;
+
+    return html`
+
+    <div class = "card">
+      <h1 class = "heading">My Trip to Italy</h1>
+      <img class = "italyimage" src="${this.imageurl}" style="width: 300px; object-fit: scale-down;">  
+      <p class = "paragraph">${this.description}</p>
+      <a href="${this.buttonlink}" rel="noopener noreferrer">
+        <button class="btn">Details</button>
+      </a>
+    </div>
+    `;
   }
 
   static get properties() {
     return {
       title: { type: String },
+      imageurl: { type: String},
+      description: { type: String},
+      buttonlink: { type: String},
     };
   }
 }
