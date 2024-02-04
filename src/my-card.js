@@ -13,7 +13,7 @@ export class MyCard extends LitElement {
 
   constructor() {
     super();
-    this.title = "My card";
+    this.title = "#";
     this.imageurl = "#";
     this.description = "#";
     this.buttonlink = "#";
@@ -37,7 +37,7 @@ export class MyCard extends LitElement {
     return html`
 
     <div class = "card">
-      <h1 class = "heading">My Trip to Italy</h1>
+      <h1 class = "heading">${this.title}</h1>
       <img class = "italyimage" src="${this.imageurl}" style="width: 300px; object-fit: scale-down;">  
       <p class = "paragraph">${this.description}</p>
       <a href="${this.buttonlink}" rel="noopener noreferrer">
