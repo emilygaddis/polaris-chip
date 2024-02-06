@@ -27,6 +27,11 @@
       margin: 12px;
       width: 350px;
     }
+
+    my-card:nth-child(2n) {
+      background-color: #d7f971
+    }
+
   </style>
   <title>polaris-chip / my-card</title>
 </head>
@@ -52,11 +57,15 @@
    description="I NEED to go visit Banff soon. The water is so blue! Click the button below to see more." buttonlink="https://hax.psu.edu"></my-card>
   <my-card title="Grand Canyon" imageurl="https://img.delicious.com.au/7MDX4Lcs/del/2018/08/grand-canyon-usa-85528-2.jpg"
    description="How beautiful! Click the button below to see more." buttonlink="https://hax.psu.edu"></my-card>
+  <my-card title="Fresh Prince" imageurl="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRPgSRgEYJ3lY8Ky8wNqfoJqWe2U2VMe-RIKbO_0HSXGj5sHA-_"></my-card>
 
 
   <!-- this is what is bringing in the definition for this tag -->
   <script type="module" src="./src/polaris-chip.js"></script>
   <script type="module" src="./src/my-card.js"></script>
+
+  <script type="module" src="./src/my-card.js"></script>
+
 </body>
 
 </html>

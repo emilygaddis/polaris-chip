@@ -15,7 +15,7 @@ export class MyCard extends LitElement {
     super();
     this.title = "#";
     this.imageurl = "#";
-    this.description = "#";
+    this.description = "Details";
     this.buttonlink = "#";
   }
 
@@ -38,7 +38,7 @@ export class MyCard extends LitElement {
 
     <div class = "card">
       <h1 class = "heading">${this.title}</h1>
-      <img class = "italyimage" src="${this.imageurl}" style="width: 300px; object-fit: scale-down;">  
+      <img class = "image" src="${this.imageurl}" style="width: 300px; object-fit: scale-down;">  
       <p class = "paragraph">${this.description}</p>
       <a href="${this.buttonlink}" rel="noopener noreferrer">
         <button class="btn">Details</button>
@@ -50,9 +50,9 @@ export class MyCard extends LitElement {
   static get properties() {
     return {
       title: { type: String },
-      imageurl: { type: String},
-      description: { type: String},
-      buttonlink: { type: String},
+      imageurl: { type: String },
+      description: { type: String },
+      buttonlink: { type: String },
     };
   }
 }
