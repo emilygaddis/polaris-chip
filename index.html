@@ -11,25 +11,14 @@
     :root,
     html,
     body {
-      margin: 0;
-      padding: 0;
+      margin: 0px;
+      padding: 0px;
       font-family: sans-serif;
       background-color: #ededed;
     }
+    
     polaris-chip {
       margin: 16px;
-    }
-
-    my-card {
-      background-color: lightblue;
-      text-align: center;
-      padding: 12px;
-      margin: 12px;
-      width: 350px;
-    }
-
-    my-card:nth-child(2n) {
-      background-color: #d7f971
     }
 
   </style>
@@ -46,25 +35,98 @@
   <polaris-chip title="University Park"></polaris-chip>
   <!-- this is going to take the tag and change the title -->
 
-  <h1>my-card</h1>
-  <my-card title="My Trip to Italy" imageurl="https://hips.hearstapps.com/hmg-prod/images/gettyimages-529426770-6504375f0d9d6.jpg"
-   description="I will take you through my travels in Italy through pictures! Click the button below to see more." buttonlink="https://hax.psu.edu"></my-card>
-  <my-card title="Hot Air Balloons!" imageurl="https://www.travelandleisure.com/thmb/MbwHC-LaxhJsfeBEBVAYCBrg5wY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/hot-air-balloons-festival-cappadocia-turkey-HOTAIR0605-6d61318b9ac0462d9d20f387e5c7d1a9.jpg"
-   description="Look at these awesome hot air balloons with a great view! Click the button below to see more." buttonlink="https://hax.psu.edu"></my-card>
-  <my-card title="Skogafoss" imageurl="https://luxurycolumnist.com/wp-content/uploads/2021/04/skogafoss-waterfall-iceland.jpg"
-   description="This magnificent view in Iceland is on my bucket list! Click the button below to see more." buttonlink="https://hax.psu.edu"></my-card>
-  <my-card title="Banff" imageurl="https://lp-cms-production.imgix.net/2019-06/4645e160dd3f5555deb3c4bd0a35a1975a7c7a4b9e4ffe63f790fe5e903d0a73.jpg"
-   description="I NEED to go visit Banff soon. The water is so blue! Click the button below to see more." buttonlink="https://hax.psu.edu"></my-card>
-  <my-card title="Grand Canyon" imageurl="https://img.delicious.com.au/7MDX4Lcs/del/2018/08/grand-canyon-usa-85528-2.jpg"
-   description="How beautiful! Click the button below to see more." buttonlink="https://hax.psu.edu"></my-card>
-  <my-card title="Fresh Prince" imageurl="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRPgSRgEYJ3lY8Ky8wNqfoJqWe2U2VMe-RIKbO_0HSXGj5sHA-_"></my-card>
+  <h1>My Card</h1>
+  <h2>Buttons</h2>
+  <div class="buttons-wrapper">
+    <button id="duplicate">Duplicate Card</button>
+    <button id="changeBG">Change Background</button>
+    <button id="changeTitle">Change Title</button>
+    <button id="changeImage">Change Image</button>
+    <button id="deleteCard">Delete Card</button>
+  </div>
 
+<div class="cardlist">
+  
+  <my-card title="My Trip to Italy" imageurl="https://hips.hearstapps.com/hmg-prod/images/gettyimages-529426770-6504375f0d9d6.jpg"> 
+  <p><strong>Cool</strong> stuff here</p>
+  </my-card>
+
+  <my-card title="Hot Air Balloons!" imageurl="https://www.travelandleisure.com/thmb/MbwHC-LaxhJsfeBEBVAYCBrg5wY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/hot-air-balloons-festival-cappadocia-turkey-HOTAIR0605-6d61318b9ac0462d9d20f387e5c7d1a9.jpg">
+    <p>Look at these <strong>awesome</strong> hot air balloons with a great view!</p>
+  </my-card>
+
+  <my-card title="Skogafoss" imageurl="https://luxurycolumnist.com/wp-content/uploads/2021/04/skogafoss-waterfall-iceland.jpg">
+    <p>This <strong>magnificent</strong> view in Iceland is on my bucket list!</p>
+  </my-card>
+
+  <my-card title="Banff" imageurl="https://lp-cms-production.imgix.net/2019-06/4645e160dd3f5555deb3c4bd0a35a1975a7c7a4b9e4ffe63f790fe5e903d0a73.jpg">
+    <p>Banff is so <strong>COOL</strong></p>
+  </my-card>
+
+  <my-card title="Grand Canyon" imageurl="https://img.delicious.com.au/7MDX4Lcs/del/2018/08/grand-canyon-usa-85528-2.jpg">
+    <p>Look how <strong>beautiful</strong></p>
+  </my-card>
+
+  <my-card title="Fresh Prince" imageurl="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRPgSRgEYJ3lY8Ky8wNqfoJqWe2U2VMe-RIKbO_0HSXGj5sHA-_">
+    <p>He's the Fresh Prince</p>
+  </my-card>
+</div>
 
   <!-- this is what is bringing in the definition for this tag -->
   <script type="module" src="./src/polaris-chip.js"></script>
   <script type="module" src="./src/my-card.js"></script>
 
-  <script type="module" src="./src/my-card.js"></script>
+  <script> 
+  document.querySelector('#duplicate').addEventListener('click', function(event) {
+    const cards = document.querySelectorAll('my-card');
+    if (cards.length < 10) {
+      const newCard = cards[0].cloneNode(true);
+      document.querySelector('.cardlist').appendChild(newCard);
+   }   
+  })
+  
+  document.querySelector('#changeTitle').addEventListener('click', function(e) {
+    const firstCard = document.querySelector('my-card');
+    firstCard.title = "A Much Different Title";
+    // cloned card has original title even after change, shadow dom problem?
+  })
+  
+  document.querySelector('#changeImage').addEventListener('click', function(e) {
+    firstCard = document.querySelector('my-card');
+    firstCard.imageurl = "https://www.savoredjourneys.com/wp-content/uploads/2019/05/Venice-italy1.jpg";
+  })
+  
+  document.querySelector('#changeBG').addEventListener('click', function(e) {
+    const allCards = document.querySelectorAll('my-card');
+    allCards.forEach(card => {
+      /*
+      card.classList.toggle('change-color');
+  
+      if (card.classList.contains('change-color')) {
+        card.classList.remove('change-color');
+      }
+      else {
+        card.classList.add('change-color');
+      }
+      */
+      const shadowRoot = card.shadowRoot;
+      const cards = shadowRoot.querySelectorAll('.card');
+
+      cards.forEach(card => {
+        card.classList.toggle('change-color');
+      });
+
+    })                                           
+  })
+  
+  document.querySelector('#deleteCard').addEventListener('click', function(e) {
+    const cards = document.querySelectorAll('my-card');
+    if (cards.length > 1) {
+      const lastCard = cards[cards.length-1];
+      document.querySelector('.cardlist').removeChild(lastCard);
+   }
+  })
+  </script>
 
 </body>
 
