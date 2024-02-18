@@ -27,7 +27,7 @@ export class MyCard extends LitElement {
       }
 
       :host([fancy]) {
-      display: block;
+        display: block;
         background-color: pink;
         border: 2px solid fuchsia;
         box-shadow: 10px 5px 5px red;

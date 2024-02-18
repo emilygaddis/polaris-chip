@@ -26,16 +26,10 @@
 </head>
 
 <body>
-  <h1>polaris-chip</h1>
-  <!-- this is going to do whatever the tag's defaults are -->
-  <polaris-chip title="News of Record" link="https://psu.edu"></polaris-chip>
-  <polaris-chip title="Faculty and Staff"></polaris-chip>
-  <polaris-chip title="Sports"></polaris-chip>
-  <polaris-chip title="Grants and Donations"></polaris-chip>
-  <polaris-chip title="University Park"></polaris-chip>
-  <!-- this is going to take the tag and change the title -->
-
   <h1>My Card</h1>
+
+  <counter-app number="0"></counter-app>
+
   <h2>Buttons</h2>
   <div class="buttons-wrapper">
     <button id="duplicate">Duplicate Card</button>
@@ -75,6 +69,8 @@
   <!-- this is what is bringing in the definition for this tag -->
   <script type="module" src="./src/polaris-chip.js"></script>
   <script type="module" src="./src/my-card.js"></script>
+  <script type="module" src="./src/counter-app.js"></script>
+
 
   <script> 
   document.querySelector('#duplicate').addEventListener('click', function(event) {
@@ -99,16 +95,6 @@
   document.querySelector('#changeBG').addEventListener('click', function(e) {
     const allCards = document.querySelectorAll('my-card');
     allCards.forEach(card => {
-      /*
-      card.classList.toggle('change-color');
-  
-      if (card.classList.contains('change-color')) {
-        card.classList.remove('change-color');
-      }
-      else {
-        card.classList.add('change-color');
-      }
-      */
       const shadowRoot = card.shadowRoot;
       const cards = shadowRoot.querySelectorAll('.card');
 
