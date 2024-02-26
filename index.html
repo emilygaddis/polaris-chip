@@ -27,11 +27,13 @@
 </head>
 
 <body>
-  <h2>Counter</h2>
+  
+  <h2>Campus Alerts</h2>
+  <campus-alert date="February 22, 2024" alert-message="ALERT ALERT ALERT"></campus-alert> 
 
+  <h2>Counter</h2>
   <counter-app number="16" min="10" max="25"></counter-app>
   <counter-app></counter-app>
-
 
   <h2>Buttons</h2>
   <div class="buttons-wrapper">
@@ -42,7 +44,7 @@
     <button id="deleteCard">Delete Card</button>
   </div>
 
-<div class="cardlist">
+  <div class="cardlist">
   
   <my-card title="My Trip to Italy" imageurl="https://hips.hearstapps.com/hmg-prod/images/gettyimages-529426770-6504375f0d9d6.jpg"> 
   <p><strong>Cool</strong> stuff here</p>
@@ -67,12 +69,14 @@
   <my-card title="Fresh Prince" imageurl="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRPgSRgEYJ3lY8Ky8wNqfoJqWe2U2VMe-RIKbO_0HSXGj5sHA-_">
     <p>He's the Fresh Prince</p>
   </my-card>
-</div>
+  </div>
 
   <!-- this is what is bringing in the definition for this tag -->
   <script type="module" src="./src/polaris-chip.js"></script>
   <script type="module" src="./src/my-card.js"></script>
   <script type="module" src="./src/counter-app.js"></script>
+  <script type="module" src="./src/campus-alert.js"></script>
+
 
 
   <script> 
