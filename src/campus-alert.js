@@ -9,67 +9,100 @@ export class CampusAlert extends LitElement{
     constructor() {
       super();
       this.date = "#";
-      this.alertMessage = "#";
-      this.minimizeAlert = true;
+      this.alertMessageText = "#";
+      this.isOpen = true;
+      this.type = "";
     }
 
     static get styles() {
       return css`
         :host{
+            --open-alert-height: 200px;
+            --closed-alert-height: 100px;
             display: flex;
             width: 100%;
             text-align: center;
             justify-content: center;
-            //font-family
-            
+            background-color: --general-background-color;
+
         }
+
+        :host([isOpen]) .alert-wrapper{
+            height: var(--open-alert-height);
+        }
+        
+        :host([isOpen=false]) .alert-wrapper{
+            height: var(--open-alert-height);
+        }
+
+        :host([type="notice"]) {
+            --general-background-color: #9f9fd4;
+            --message-background-color: #dbdbfa;
+        }      
+        
+        :host([type="warning"]) {
+            --general-background-color: #dc9e3c;
+            --message-background-color: #ebf047;
+        }    
+        
+        :host([type="alert"]) {
+            --general-background-color: #952d2d;
+            --message-background-color: #f04747;
+        }  
 
         .alert-wrapper {
             display: flex;
             flex-direction: row;
-            background-color: pink;
+            background-color: var(--general-background-color);
+            height: var(--open-alert-height);
             width: 100%;
         }
 
         .alert-message {
             flex-grow: 1;
-            background-color: white;
-            padding: 0 20px;
+            background-color: var(--message-background-color);
+            padding: 0 10px;
+            transform: skew(20deg); 
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .alert-message-text{
+            transform: skew(-20deg); 
+
         }
 
        `;
     }
 
-    render () {
-      return html`            
+    toggleAlert() {
+        this.isOpen = !this.isOpen;
+    }
+
+    render () {      
+
+      return html`  
+          
         <div class="alert-wrapper">
 
             <div class="date">
                 <p>${this.date}</p>
             </div>
 
-            <div class="alert-message">
-                <!--
-                ::before
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 82 82" class="alert-icon">
-                    <g transform="translate(-350.099 -428.714)">
-                        <g transform="translate(350.099 428.714)" fill="none" stroke-width="6">
-                            <circle cx="41" cy="41" r="41" stroke="none"></circle>
-                            <circle cx="41" cy="41" r="38" fill="none"></circle>
-                        </g>
-                        <g transform="translate(384.41 448.566)">
-                            <rect width="10.381" height="7.786" transform="translate(0.919 34.336)"></rect>
-                            <path d="M6520.672,2327.554h-5.854l-3.21-23.669V2299.2h11.81v4.681Z" transform="translate(-6511.607 -2299.203)"></path>
-                        </g>
-                    </g>
-                </svg>
-                -->
-                <p>${this.alertMessage}</p>
-                <!--<a href="" class="-->
-            </div>
+            <slot>
+                <div class="alert-message">
+                    <!--
+                    <details ?open: !isOpen @toggle="${this.isOpen}">
+                        <summary>Description</summary>
+                    </details>
+        -->
+                    <p class="alert-message-text">${this.alertMessageText}</p>
+                </div> 
+            </slot>
 
-            <div class="minimize-alert">
-                <button>${this.minimizeAlert}</button>
+            <div class="is-open">
+                <button>${this.isOpen}</button>
             </div>
         </div>
         
@@ -79,8 +112,9 @@ export class CampusAlert extends LitElement{
     static get properties() {
       return {  
         date: { type: String },
-        alertMessage: { type: String, attribute: "alert-message" },
-        minimizeAlert: { type: Boolean, attribute: "minimize-alert", reflect: true },
+        alertMessageText: { type: String, attribute: "alert-message-text" },
+        isOpen: { type: Boolean, attribute: "is-open", reflect: true },
+        type: { type: String },
       };
     } 
 }
