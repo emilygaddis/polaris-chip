@@ -59,7 +59,7 @@ export class CampusAlert extends LitElement{
             --message-background-color: #f16f6f;
         }  
 
-        .sticky-alert {
+        #sticky-alert {
             position: sticky;
             top: 0;
             z-index: 100;
@@ -71,7 +71,7 @@ export class CampusAlert extends LitElement{
             //flex-direction: row;
             background-color: var(--general-background-color);
             height: var(--open-alert-height);
-            //width: 100%;
+            width: 100%;
         }
 
         .message-full {
@@ -85,20 +85,23 @@ export class CampusAlert extends LitElement{
         .alert-message {
             display: flex;
             height: var(--open-alert-height);
-            //flex-grow: 1;
             background-color: var(--message-background-color);
-            //padding: 0 10px;
             transform: skew(20deg); 
             align-items: center;
-            //margin-left: 2vw;
-            //justify-content: center;
-            //height: 100%;
             width: 900px;
-            //position: relative;
+            
         }
 
         .alert-message-text{
             transform: skew(-20deg); 
+            margin-left: 3vw;
+            margin-right: 2vw;
+            justify-content: center;
+        }
+
+        .alert-icon {
+            transform: skew(-20deg) scale(1.25); 
+            margin-left: 4vw;
         }
 
         .date-time {
@@ -125,24 +128,25 @@ export class CampusAlert extends LitElement{
             color: var(--message-background-color);
         }
 
-        .alert-icon {
-            //-webkit-box-flex: 0;
-            //-ms-flex: 0 0 90px;
-            flex: 0 0 90px;
-            height: 90px;
-            margin-left: 0;
-            margin-right: 24px;
-            z-index: 1;
-            -ms-flex-item-align: center;
-            align-self: center;
-            transform: skew(-20deg); 
-        }
-
         .close-alert-button {
             background-color: transparent;
             border-color: transparent;
-            
-            
+            display: flex;
+            align-items: center;
+            margin-left: 2vw;
+            margin-top: 0;
+        }
+
+        .close-alert-button-text {
+            margin-left: 8px;
+            line-height: 14.48px;
+            font-weight: 600;
+            font-size: 90%;
+        }
+
+        .button-wrapper {
+            display: flex;
+            align-items: flex-start;
         }
 
         .message-min {
@@ -168,20 +172,27 @@ export class CampusAlert extends LitElement{
             margin-right: 1vw;
         }
 
-
+        
        `;
     }
 
     toggleAlert() {
         this.isOpen = !this.isOpen;
         localStorage.setItem("--alert-opened-state", this.isOpen);
+
+        if (this.isOpen) {
+            this.shadowRoot.querySelector('button.close-alert-button').focus();
+        } else {
+            this.shadowRoot.querySelector('button.expand-alert-button').focus();
+        }
     }
 
     openedAlert() {
         return html` 
-            <div class="alert-wrapper ${(this.sticky) ? "sticky-alert" : ""}">
+            <div id="sticky-alert" class="${this.isSticky ? 'sticky-alert' : ''}">
+            <div class="alert-wrapper">
                 <div class="message-full">
-                    <slot></slot>
+                    <slot>
 
                     <div class="date-time">
                         <p class="date">${this.date}</p>
@@ -189,64 +200,54 @@ export class CampusAlert extends LitElement{
                     </div>
 
                     <div class="alert-message">
-                    <!---    
-                    <svg class="alert-icon" viewBox="0 0 82 82">
-                            <g fill="none" data-name="Path 4286">
-                                <path d="M41 0A41 41 0 110 41 41 41 0 0141 0z"></path>
-                                <path d="M41 6C21.7 6 6 21.7 6 41s15.7 35 35 35 35-15.7 35-35S60.3 6 41 6m0-6c22.644 0 41 18.356 41 41S63.644 82 41 82 0 63.644 0 41 18.356 0 41 0z"></path>
-                            </g>
-                            <g fill="#000321" data-name="Group 3036">
-                                <path d="M35.232 54.188h10.381v7.786H35.232z" data-name="Rectangle 3589"></path>
-                                <path d="M43.378 48.203h-5.854l-3.21-23.669v-4.685h11.81v4.681z" data-name="Path 2763"></path>
-                            </g>
-                            <circle cx="41" cy="41" fill="none" stroke="#000321" stroke-width="4"></circle>
-                        </svg>
-                        --->
-
-                        <p class="alert-message-text"><svg xmlns="http://www.w3.org/2000/svg" style="height: 30px; width: 30px; align-items: center;" viewBox="0 0 24 24"><title>alert-circle-outline</title><path d="M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z" /></svg>
-                            ${this.alertMessageText}
-                        </p>
+                        <svg class="alert-icon" xmlns="http://www.w3.org/2000/svg" style="height: 90px; width: 90px; align-items: center;" viewBox="0 0 24 24"><title>alert-circle-outline</title><path d="M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z"/></svg>    
+                        <p class="alert-message-text">${this.alertMessageText}</p>
 
                         <div class="triangle"></div>
-                        <div class="polygon"></div>
                     </div>
 
                     <div class="button-wrapper">
-                        <button class="close-alert-button" aria-label="collapse" @click="${this.toggleAlert}"> Close
-                            <svg class="alert-dismiss" viewBox="0 0 14.453 14.449">
+                        <button class="close-alert-button" aria-label="collapse" @click="${this.toggleAlert}">
+                            <svg class="alert-dismiss" style="height: 14.48px; width: 14.48px;">
                                 <path d="M8.939 7.224l5.162-5.162A1.21 1.21 0 1012.39.351l-5.161 5.16L2.067.349A1.21 1.21 0 10.356 2.06l5.159 5.164-5.162 5.162a1.21 1.21 0 101.711 1.711l5.162-5.162 5.162 5.162a1.21 1.21 0 101.711-1.711z" data-name="Icon ionic-ios-close"></path>
                             </svg>
-                            <span class="visually-hidden"></span>
+                            <p class="close-alert-button-text">Close</p>
                         </button>
                     </div>
+                    </slot>
                 </div>
+            </div>
             </div>
         `;
     }
 
     closedAlert() {
         return html`
-            <div class="message-min ${(this.sticky) ? "sticky-alert" : ""}">
+            <div id="sticky-alert" class="${this.isSticky ? 'sticky-alert' : ''}">
+            <div class="message-min">
                 <button class="expand-alert-button" tabindex="0" aria-label="Open Alert" @click="${this.toggleAlert}">
                     <svg xmlns="http://www.w3.org/2000/svg" style="height: 50px; width: 50px;" viewBox="0 0 24 24"><title>alert-circle-outline</title><path d="M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z"/></svg>
                     <span class="closed-alert-text">ALERT</span>
                     <svg xmlns="http://www.w3.org/2000/svg" style="height: 50px; width: 50px;" viewBox="0 0 24 24"><title>chevron-down</title><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
                 </button> 
             </div>  
-        `;
+            </div>
+        `;  
     }
 
 
     render() {      
-        /*
         if(this.isSticky) {
             if(this.isOpen) {
                 return html` <div id="sticky-alert">${this.openedAlert()}</div>`;
             }
-            return html` <div id="sticky-alert">${this.closedAlert()}</div>`;
-        } 
-        */    
-        return (this.isOpen) ? this.openedAlert() : this.closedAlert();
+            else {
+                return html` <div id="sticky-alert">${this.closedAlert()}</div>`;
+            }
+        }    
+        else {
+            return (this.isOpen) ? this.openedAlert() : this.closedAlert();
+        }
     }
 
     static get properties() {
