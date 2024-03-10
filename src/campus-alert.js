@@ -11,9 +11,13 @@ export class CampusAlert extends LitElement{
       this.date = "#";
       this.time = "#";
       this.alertMessageText = "#";
-      this.isOpen = true;
       this.isSticky = false;
-      this.type = "";
+      this.issue = "#";
+      this.isOpen = true;
+      if(localStorage.getItem("--alert-opened-state") == "false") {
+            this.isOpen = false;
+      }
+
     }
 
     static get styles() {
@@ -32,29 +36,35 @@ export class CampusAlert extends LitElement{
             border-color: transparent;
         }
 
-        :host([isOpen]) .alert-wrapper{
+        :host([isOpen]) .message-full {
             height: var(--open-alert-height);
         }
         
-        :host([isOpen=false]) .alert-wrapper{
+        :host([isOpen=false]) .message-min{
             height: var(--closed-alert-height);
 
         }
 
-        :host([type="notice"]) {
-            --general-background-color: #9f9fd4;
-            --message-background-color: #dbdbfa;
+        :host([issue="notice"]) {
+            --general-background-color: #7c91de;
+            --message-background-color: #c0d6ff;
         }      
         
-        :host([type="warning"]) {
-            --general-background-color: #dc9e3c;
-            --message-background-color: #ebf047;
+        :host([issue="warning"]) {
+            --general-background-color: #d4d76a;
+            --message-background-color: #eff388;
         }    
         
-        :host([type="alert"]) {
-            --general-background-color: #952d2d;
-            --message-background-color: #f04747;
+        :host([issue="alert"]) {
+            --general-background-color: #ca5151;
+            --message-background-color: #f16f6f;
         }  
+
+        .sticky {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
         .alert-wrapper {
             display: flex;
@@ -136,74 +146,87 @@ export class CampusAlert extends LitElement{
             //flex-direction: row;
         }
 
+        .message-min {
+            height: var(--closed-alert-height);
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+
+        .expand-alert-button {
+            width: 100%;
+            font-weight: 700;
+            font-style: italic;
+            border-color: transparent;
+            background-color: var(--message-background-color);
+
+        }
+
+
        `;
     }
 
     toggleAlert() {
-        console.log(e.newState);
-        if (e.newState === "open") {
-          this.isOpen = true;
-        }
-        else {
-          this.isOpen = false;
-        }
+        this.isOpen = !this.isOpen;
+        localStorage.setItem("--alert-opened-state", this.isOpen);
     }
 
-    render () {      
+    openedAlert() {
+        return html` 
+            <div class="alert-wrapper">
+                <div class="message-full">
+                    <slot></slot>
 
-      return html`  
-          
-        <div class="alert-wrapper">
+                    <div class="date-time">
+                        <p class="date">${this.date}</p>
+                        <p class="time">${this.time}</p>
+                    </div>
 
-            <!---
+                    <div class="alert-message">
+                        <svg class="alert-icon" viewBox="0 0 82 82">
+                            <g fill="none" data-name="Path 4286">
+                                <path d="M41 0A41 41 0 110 41 41 41 0 0141 0z"></path>
+                                <path d="M41 6C21.7 6 6 21.7 6 41s15.7 35 35 35 35-15.7 35-35S60.3 6 41 6m0-6c22.644 0 41 18.356 41 41S63.644 82 41 82 0 63.644 0 41 18.356 0 41 0z"></path>
+                            </g>
+                            <g fill="#000321" data-name="Group 3036">
+                                <path d="M35.232 54.188h10.381v7.786H35.232z" data-name="Rectangle 3589"></path>
+                                <path d="M43.378 48.203h-5.854l-3.21-23.669v-4.685h11.81v4.681z" data-name="Path 2763"></path>
+                            </g>
+                        </svg>
+
+                        <p class="alert-message-text">${this.alertMessageText}</p>
+
+                        <div class="triangle"></div>
+                        <div class="polygon"></div>
+                    </div>
+
+                    <div class="button-wrapper">
+                        <button class="close-alert-button" aria-label="collapse" @click="${this.toggleAlert}"> Close
+                            <svg class="alert-dismiss" viewBox="0 0 14.453 14.449">
+                                <path d="M8.939 7.224l5.162-5.162A1.21 1.21 0 1012.39.351l-5.161 5.16L2.067.349A1.21 1.21 0 10.356 2.06l5.159 5.164-5.162 5.162a1.21 1.21 0 101.711 1.711l5.162-5.162 5.162 5.162a1.21 1.21 0 101.711-1.711z" data-name="Icon ionic-ios-close"></path>
+                            </svg>
+                            <span class="visually-hidden"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    closedAlert() {
+        return html`
             <div class="message-min">
-                <button class="expand-alert" tabindex="0" aria-label="Open Alert">
+                <button class="expand-alert-button" tabindex="0" aria-label="Open Alert" @click="${this.toggleAlert}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="82" height="82" viewBox="0 0 82 82" class="alert-icon min" aria-hidden="true"><g transform="translate(-350.099 -428.714)"><g transform="translate(350.099 428.714)" fill="none" stroke-width="6"><circle cx="41" cy="41" r="41" stroke="none"></circle><circle cx="41" cy="41" r="38" fill="none"></circle></g><g transform="translate(384.41 448.566)"><rect width="10.381" height="7.786" transform="translate(0.919 34.336)"></rect><path d="M6520.672,2327.554h-5.854l-3.21-23.669V2299.2h11.81v4.681Z" transform="translate(-6511.607 -2299.203)" class="alert-icon-min"></path></g></g></svg>
-                    <span>test</span>
-                    <svg class="svg-inline--fa fa-angle-down" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path></svg>     
+                    <span>ALERT</span>
+                    <svg class="closed-carrot" width="34" height="34" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path></svg>     
                 </button> 
             </div>  
-            --->
-
-            <div class="message-full">
-                <slot></slot>
-
-                <div class="date-time">
-                    <p class="date">${this.date}</p>
-                    <p class="time">${this.time}</p>
-                </div>
-
-                <div class="alert-message">
-                    <svg class="alert-icon" viewBox="0 0 82 82">
-                        <g fill="none" data-name="Path 4286">
-                            <path d="M41 0A41 41 0 110 41 41 41 0 0141 0z"></path>
-                            <path d="M41 6C21.7 6 6 21.7 6 41s15.7 35 35 35 35-15.7 35-35S60.3 6 41 6m0-6c22.644 0 41 18.356 41 41S63.644 82 41 82 0 63.644 0 41 18.356 0 41 0z"></path>
-                        </g>
-                        <g fill="#000321" data-name="Group 3036">
-                            <path d="M35.232 54.188h10.381v7.786H35.232z" data-name="Rectangle 3589"></path>
-                            <path d="M43.378 48.203h-5.854l-3.21-23.669v-4.685h11.81v4.681z" data-name="Path 2763"></path>
-                        </g>
-                    </svg>
-
-                    <p class="alert-message-text">${this.alertMessageText}</p>
-        
-                    <div class="triangle"></div>
-                    <div class="polygon"></div>
-                </div>
-
-                <button class="close-alert-button" aria-label="collapse"> Close
-                    <svg class="alert-dismiss" viewBox="0 0 14.453 14.449">
-                        <path d="M8.939 7.224l5.162-5.162A1.21 1.21 0 1012.39.351l-5.161 5.16L2.067.349A1.21 1.21 0 10.356 2.06l5.159 5.164-5.162 5.162a1.21 1.21 0 101.711 1.711l5.162-5.162 5.162 5.162a1.21 1.21 0 101.711-1.711z" data-name="Icon ionic-ios-close"></path>
-                    </svg>
-                    <span class="visually-hidden"></span>
-                </button>
-
-            </div>
-        </div>
-  
 
 
-                <!---
+
+            <!---
                     <p class="alert-message-text">${this.alertMessageText}</p>
 
                 
@@ -218,8 +241,12 @@ export class CampusAlert extends LitElement{
                 <button class="closeButton"> X Close </button>
             </div>
             --->
-        
-      `;
+        `;
+    }
+
+
+    render() {      
+      return (this.isOpen) ? this.openedAlert() : this.closedAlert();
     }
 
     static get properties() {
@@ -229,7 +256,7 @@ export class CampusAlert extends LitElement{
         alertMessageText: { type: String, attribute: "alert-message-text" },
         isOpen: { type: Boolean, attribute: "is-open", reflect: true },
         isSticky: { type: Boolean, attribute: "is-sticky", reflect: true },
-        type: { type: String },
+        issue: { type: String },
       };
     } 
 }
