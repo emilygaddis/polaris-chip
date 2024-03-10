@@ -97,11 +97,15 @@ export class CampusAlert extends LitElement{
             margin-left: 3vw;
             margin-right: 2vw;
             justify-content: center;
+            overflow: auto;
+            max-height: var(--open-alert-height);
+
         }
 
         .alert-icon {
             transform: skew(-20deg) scale(1.25); 
             margin-left: 4vw;
+            flex: 0 0 auto;
         }
 
         .date-time {
@@ -172,6 +176,11 @@ export class CampusAlert extends LitElement{
             margin-right: 1vw;
         }
 
+        @media (max-width: 800px) and (min-width: 200px) {
+            .alert-wrapper {
+                display: block;
+            }
+        }
         
        `;
     }
