@@ -23,8 +23,8 @@ export class CampusAlert extends LitElement{
     static get styles() {
       return css`
         :host{
-            --open-alert-height: 200px;
-            --closed-alert-height: 100px;
+            --open-alert-height: 160px;
+            --closed-alert-height: 80px;
             // display: flex;
             width: 100%;
             text-align: center;
@@ -42,7 +42,6 @@ export class CampusAlert extends LitElement{
         
         :host([isOpen=false]) .message-min{
             height: var(--closed-alert-height);
-
         }
 
         :host([issue="notice"]) {
@@ -60,10 +59,11 @@ export class CampusAlert extends LitElement{
             --message-background-color: #f16f6f;
         }  
 
-        .sticky {
+        .sticky-alert {
             position: sticky;
             top: 0;
             z-index: 100;
+            opacity: 1.0;
         }
 
         .alert-wrapper {
@@ -141,18 +141,15 @@ export class CampusAlert extends LitElement{
         .close-alert-button {
             background-color: transparent;
             border-color: transparent;
-            //align-items:
-            //display: flex;
-            //flex-direction: row;
+            
+            
         }
 
         .message-min {
             height: var(--closed-alert-height);
             width: 100%;
             display: flex;
-            align-items: center;
         }
-
 
         .expand-alert-button {
             width: 100%;
@@ -160,7 +157,15 @@ export class CampusAlert extends LitElement{
             font-style: italic;
             border-color: transparent;
             background-color: var(--message-background-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19.2px;
+        }
 
+        .closed-alert-text {
+            margin-left: 1vw;
+            margin-right: 1vw;
         }
 
 
@@ -174,7 +179,7 @@ export class CampusAlert extends LitElement{
 
     openedAlert() {
         return html` 
-            <div class="alert-wrapper">
+            <div class="alert-wrapper ${(this.sticky) ? "sticky-alert" : ""}">
                 <div class="message-full">
                     <slot></slot>
 
@@ -184,7 +189,8 @@ export class CampusAlert extends LitElement{
                     </div>
 
                     <div class="alert-message">
-                        <svg class="alert-icon" viewBox="0 0 82 82">
+                    <!---    
+                    <svg class="alert-icon" viewBox="0 0 82 82">
                             <g fill="none" data-name="Path 4286">
                                 <path d="M41 0A41 41 0 110 41 41 41 0 0141 0z"></path>
                                 <path d="M41 6C21.7 6 6 21.7 6 41s15.7 35 35 35 35-15.7 35-35S60.3 6 41 6m0-6c22.644 0 41 18.356 41 41S63.644 82 41 82 0 63.644 0 41 18.356 0 41 0z"></path>
@@ -193,9 +199,13 @@ export class CampusAlert extends LitElement{
                                 <path d="M35.232 54.188h10.381v7.786H35.232z" data-name="Rectangle 3589"></path>
                                 <path d="M43.378 48.203h-5.854l-3.21-23.669v-4.685h11.81v4.681z" data-name="Path 2763"></path>
                             </g>
+                            <circle cx="41" cy="41" fill="none" stroke="#000321" stroke-width="4"></circle>
                         </svg>
+                        --->
 
-                        <p class="alert-message-text">${this.alertMessageText}</p>
+                        <p class="alert-message-text"><svg xmlns="http://www.w3.org/2000/svg" style="height: 30px; width: 30px; align-items: center;" viewBox="0 0 24 24"><title>alert-circle-outline</title><path d="M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z" /></svg>
+                            ${this.alertMessageText}
+                        </p>
 
                         <div class="triangle"></div>
                         <div class="polygon"></div>
@@ -216,37 +226,27 @@ export class CampusAlert extends LitElement{
 
     closedAlert() {
         return html`
-            <div class="message-min">
+            <div class="message-min ${(this.sticky) ? "sticky-alert" : ""}">
                 <button class="expand-alert-button" tabindex="0" aria-label="Open Alert" @click="${this.toggleAlert}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="82" height="82" viewBox="0 0 82 82" class="alert-icon min" aria-hidden="true"><g transform="translate(-350.099 -428.714)"><g transform="translate(350.099 428.714)" fill="none" stroke-width="6"><circle cx="41" cy="41" r="41" stroke="none"></circle><circle cx="41" cy="41" r="38" fill="none"></circle></g><g transform="translate(384.41 448.566)"><rect width="10.381" height="7.786" transform="translate(0.919 34.336)"></rect><path d="M6520.672,2327.554h-5.854l-3.21-23.669V2299.2h11.81v4.681Z" transform="translate(-6511.607 -2299.203)" class="alert-icon-min"></path></g></g></svg>
-                    <span>ALERT</span>
-                    <svg class="closed-carrot" width="34" height="34" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path></svg>     
+                    <svg xmlns="http://www.w3.org/2000/svg" style="height: 50px; width: 50px;" viewBox="0 0 24 24"><title>alert-circle-outline</title><path d="M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z"/></svg>
+                    <span class="closed-alert-text">ALERT</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" style="height: 50px; width: 50px;" viewBox="0 0 24 24"><title>chevron-down</title><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
                 </button> 
             </div>  
-
-
-
-            <!---
-                    <p class="alert-message-text">${this.alertMessageText}</p>
-
-                
-                    <details ?open: !isOpen @toggle="${this.isOpen}">
-                        <summary>Description</summary>
-                    </details>
-                --->
-          
-
-            <!---
-            <div class="is-open">
-                <button class="closeButton"> X Close </button>
-            </div>
-            --->
         `;
     }
 
 
     render() {      
-      return (this.isOpen) ? this.openedAlert() : this.closedAlert();
+        /*
+        if(this.isSticky) {
+            if(this.isOpen) {
+                return html` <div id="sticky-alert">${this.openedAlert()}</div>`;
+            }
+            return html` <div id="sticky-alert">${this.closedAlert()}</div>`;
+        } 
+        */    
+        return (this.isOpen) ? this.openedAlert() : this.closedAlert();
     }
 
     static get properties() {
