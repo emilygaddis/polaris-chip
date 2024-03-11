@@ -25,7 +25,6 @@ export class CampusAlert extends LitElement{
         :host{
             --open-alert-height: 160px;
             --closed-alert-height: 80px;
-            // display: flex;
             width: 100%;
             text-align: center;
             justify-content: center;
@@ -59,16 +58,17 @@ export class CampusAlert extends LitElement{
             --message-background-color: #f16f6f;
         }  
 
-        #sticky-alert {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            opacity: 1.0;
+        :host([isSticky="true"]) {
+            #sticky-alert {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                opacity: 1.0;
+            }
         }
 
         .alert-wrapper {
             display: flex;
-            //flex-direction: row;
             background-color: var(--general-background-color);
             height: var(--open-alert-height);
             width: 100%;
@@ -77,9 +77,7 @@ export class CampusAlert extends LitElement{
         .message-full {
             display: flex;
             flex-direction: row;
-            align-items: center;
-            //justify-content: center;
-            
+            align-items: center;            
         }
 
         .alert-message {
@@ -115,8 +113,6 @@ export class CampusAlert extends LitElement{
             font-weight: 600;
             font-size: 90%;
             text-transform: uppercase;
-            //padding: 0px;
-            //line-height: 1.3;
         }    
 
         .triangle {
