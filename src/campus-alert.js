@@ -58,14 +58,12 @@ export class CampusAlert extends LitElement{
             --message-background-color: #f16f6f;
         }  
 
-        :host([isSticky="true"]) {
-            #sticky-alert {
-                position: sticky;
-                top: 0;
-                z-index: 100;
-                opacity: 1.0;
-            }
+        #sticky-alert {
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
+
 
         .alert-wrapper {
             display: flex;
@@ -246,13 +244,10 @@ export class CampusAlert extends LitElement{
             if(this.isOpen) {
                 return html` <div id="sticky-alert">${this.openedAlert()}</div>`;
             }
-            else {
-                return html` <div id="sticky-alert">${this.closedAlert()}</div>`;
-            }
+            return html` <div id="sticky-alert">${this.closedAlert()}</div>`;
         }    
-        else {
-            return (this.isOpen) ? this.openedAlert() : this.closedAlert();
-        }
+        return (this.isOpen) ? this.openedAlert() : this.closedAlert();
+        
     }
 
     static get properties() {
