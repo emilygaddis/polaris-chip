@@ -236,7 +236,6 @@ export class CampusAlert extends LitElement{
 
     render() {      
         return (this.isOpen) ? this.openedAlert() : this.closedAlert();
-        
     }
 
     static get properties() {
