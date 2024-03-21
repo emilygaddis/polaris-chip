@@ -1,0 +1,386 @@
+{
+  "schema_version": "1.0.0",
+  "functions": [
+    {
+      "name": "loadDDDFonts",
+      "description": " call this to load all the fonts that are official",
+      "summary": "",
+      "sourceRange": {
+        "file": "d-d-d.js",
+        "start": {
+          "line": 15,
+          "column": 7
+        },
+        "end": {
+          "line": 30,
+          "column": 1
+        }
+      },
+      "privacy": "public",
+      "params": [],
+      "return": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "DDDSuper",
+      "description": " super class so we can mix styles into other things more easily",
+      "summary": "",
+      "sourceRange": {
+        "file": "d-d-d.js",
+        "start": {
+          "line": 33,
+          "column": 24
+        },
+        "end": {
+          "line": 51,
+          "column": 1
+        }
+      },
+      "privacy": "public",
+      "params": []
+    }
+  ],
+  "classes": [
+    {
+      "description": "",
+      "summary": "",
+      "path": "d-d-d.js",
+      "properties": [],
+      "methods": [],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 34,
+          "column": 9
+        },
+        "end": {
+          "line": 50,
+          "column": 3
+        }
+      },
+      "privacy": "public",
+      "superclass": "SuperClass"
+    },
+    {
+      "description": "autoloads fonts and gives it a tag name; this is useful",
+      "summary": "",
+      "path": "d-d-d.js",
+      "properties": [],
+      "methods": [],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 54,
+          "column": 0
+        },
+        "end": {
+          "line": 61,
+          "column": 1
+        }
+      },
+      "privacy": "public",
+      "name": "DDD"
+    },
+    {
+      "description": "",
+      "summary": "",
+      "path": "lib/d-d-docs.js",
+      "properties": [],
+      "methods": [
+        {
+          "name": "renderDDDelementsList",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 165,
+              "column": 2
+            },
+            "end": {
+              "line": 185,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "renderBorders",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 187,
+              "column": 2
+            },
+            "end": {
+              "line": 221,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "renderBreakpoints",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 223,
+              "column": 2
+            },
+            "end": {
+              "line": 255,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "renderDefaultColors",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 257,
+              "column": 2
+            },
+            "end": {
+              "line": 547,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "renderDefaultFunctionalColors",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 549,
+              "column": 2
+            },
+            "end": {
+              "line": 653,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "renderGradients",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 655,
+              "column": 2
+            },
+            "end": {
+              "line": 685,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "renderRadius",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 687,
+              "column": 2
+            },
+            "end": {
+              "line": 721,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "renderShadows",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 723,
+              "column": 2
+            },
+            "end": {
+              "line": 763,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "renderSpacing",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 765,
+              "column": 2
+            },
+            "end": {
+              "line": 942,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "renderTypography",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 944,
+              "column": 2
+            },
+            "end": {
+              "line": 1342,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "renderRichText",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 1344,
+              "column": 2
+            },
+            "end": {
+              "line": 1423,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "renderButtons",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 1425,
+              "column": 2
+            },
+            "end": {
+              "line": 1507,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "renderPageSections",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 1509,
+              "column": 2
+            },
+            "end": {
+              "line": 1630,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "renderInstructionalComponents",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 1632,
+              "column": 2
+            },
+            "end": {
+              "line": 1811,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "selectOption",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 1813,
+              "column": 2
+            },
+            "end": {
+              "line": 1829,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "render",
+          "description": "LitElement render callback",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 1834,
+              "column": 2
+            },
+            "end": {
+              "line": 1859,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": []
+        }
+      ],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 40,
+          "column": 0
+        },
+        "end": {
+          "line": 1919,
+          "column": 1
+        }
+      },
+      "privacy": "public",
+      "superclass": "DDD",
+      "name": "DDDocs"
+    }
+  ]
+}
