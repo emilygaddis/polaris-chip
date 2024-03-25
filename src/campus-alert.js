@@ -144,14 +144,14 @@ export class CampusAlert extends DDD {
             }
 
             .button-wrapper {
-                align-items: flex-start;
+
             }
 
             .close-alert-button {
                 background-color: transparent;
                 border-color: transparent;
                 display: flex;
-                align-items: flex-start;
+                align-items: center;
                 margin-left: 2vw;
                 margin-top: 0;
                 font-family: var(--ddd-font-navigation);
@@ -166,7 +166,7 @@ export class CampusAlert extends DDD {
 
             .button-wrapper {
                 display: flex;
-                align-items: flex-start;
+                align-items: center;
             }
 
             .message-min {
