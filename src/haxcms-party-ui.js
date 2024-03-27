@@ -10,7 +10,8 @@ export class HaxcmsPartyUI extends DDD {
 
     constructor() {
         super();
-        this.items = [];
+        this.users = [];
+        this.userName = "User Name";
     }
 
     static get styles() {
@@ -41,22 +42,20 @@ export class HaxcmsPartyUI extends DDD {
         `];
     } 
 
-    /*
-
-    addItem(e) {
+    addUser(e) {
         const randomNumber = globalThis.crypto.getRandomValues(new Uint32Array(1))[0];
     
-        const item = {
+        const user = {
           id: randomNumber,
-          title: "Cool",
+          name: this.userName,
         }
 
-        console.log(item);
+        console.log(user);
         // push by itself is not a mutating operation
-        this.items.push(item);
+        this.users.push(user);
         this.requestUpdate();
         //this.items = [...this.items, item];
-        console.log(this.items);
+        console.log(this.users);
     }
     
     targetClicked(e) {
@@ -78,25 +77,26 @@ export class HaxcmsPartyUI extends DDD {
             return item.id === parseInt(e.target.closest('my-item').getAttribute('data-id'));
         });
         console.log(index);
-    });
-    */
-    
+    });    
+    }
 
     render() {
         return html`
             <div class="party-ui-wrapper">
                 <div class="input-wrapper">
                     <input type="text">
-                    <button class="add-btn">Add</button>
+                    <button class="add-btn" @click="${this.addUser}">Add</button>
                 </div>
 
                 <div class="user-character-wrapper">
-                    <!--${this.items.map((item) => html`                        <div class="user-item">
-                        <rpg-character></rpg-character>
-                    `)} -->
-                    <rpg-character></rpg-character>
-
+                    ${this.users.map((user) => html`                        
+                    <div class="user-character">
+                           <rpg-character class="user-character" seed="${user.name}"></rpg-character>
+                           <p class="character-name">${user.name}</p>
+                    </div>
+                    `)}
                 </div>
+
 
                 <button class="save-btn">Save</button>
             </div>
@@ -106,7 +106,8 @@ export class HaxcmsPartyUI extends DDD {
     static get properties() {
         return {  
             ...super.properties,
-            items: { type: Array },
+            users: { type: Array },
+            userName: { type: String },
         };
     }
 
