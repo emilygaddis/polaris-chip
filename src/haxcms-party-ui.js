@@ -19,13 +19,15 @@ export class HaxcmsPartyUI extends DDD {
           super.styles,
           css`
             :host {
-                display: block;
                 text-align: center;
                 margin: var(--ddd-spacing-10);
             }
 
             .party-ui-wrapper {
-                background-color: var(--ddd-theme-default-keystoneYellow);
+                background-color: var(--ddd-theme-default-creekLight);
+                border: var(--ddd-border-xs);
+                border-color: var(--ddd-theme-default-potential70);
+                border-radius: var(--ddd-radius-sm);
             }
 
             .input-wrapper {
@@ -33,11 +35,33 @@ export class HaxcmsPartyUI extends DDD {
             }
 
             .user-character-wrapper {
-                padding: var(--ddd-spacing-4);
+                //display: inline-flex;
+                //flex-direction: row;
+                width: 100px;
+                align-items: center;
             }
 
+            .user-character {
+                text-align: center;
+                display: block;
+            }
+
+            .input-text, .add-btn {
+                border: var(--ddd-border-xs);
+                border-color: var(--ddd-theme-default-potential70);
+                border-radius: var(--ddd-radius-xs);         
+            }
+        
             .save-btn {
                 margin: var(--ddd-spacing-2);
+                border: var(--ddd-border-xs);
+                border-color: var(--ddd-theme-default-potential70);
+                border-radius: var(--ddd-radius-xs);         
+            }
+
+            button:hover {
+                background-color: var(--ddd-theme-default-creekTeal);
+                color: white;
             }
         `];
     } 
@@ -77,20 +101,20 @@ export class HaxcmsPartyUI extends DDD {
             return item.id === parseInt(e.target.closest('my-item').getAttribute('data-id'));
         });
         console.log(index);
-    });    
+        });    
     }
 
     render() {
         return html`
             <div class="party-ui-wrapper">
                 <div class="input-wrapper">
-                    <input type="text">
+                    <input class="input-text" type="text" placeholder="Username">
                     <button class="add-btn" @click="${this.addUser}">Add</button>
                 </div>
 
                 <div class="user-character-wrapper">
                     ${this.users.map((user) => html`                        
-                    <div class="user-character">
+                    <div class="character-wrapper">
                            <rpg-character class="user-character" seed="${user.name}"></rpg-character>
                            <p class="character-name">${user.name}</p>
                     </div>
