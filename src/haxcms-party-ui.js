@@ -11,7 +11,7 @@ export class HaxcmsPartyUI extends DDD {
     constructor() {
         super();
         this.users = [];
-        this.userName = "User Name";
+        this.userName = "";
     }
 
     static get styles() {
@@ -20,7 +20,6 @@ export class HaxcmsPartyUI extends DDD {
           css`
             :host {
                 text-align: center;
-                margin: var(--ddd-spacing-10);
             }
 
             .party-ui-wrapper {
@@ -28,6 +27,7 @@ export class HaxcmsPartyUI extends DDD {
                 border: var(--ddd-border-xs);
                 border-color: var(--ddd-theme-default-potential70);
                 border-radius: var(--ddd-radius-sm);
+                margin: var(--ddd-spacing-10);
             }
 
             .input-wrapper {
@@ -36,14 +36,36 @@ export class HaxcmsPartyUI extends DDD {
 
             .user-character-wrapper {
                 //display: inline-flex;
-                //flex-direction: row;
+                flex-direction: row;
                 width: 100px;
-                align-items: center;
+                //align-items: center;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .character-wrapper {
+                width: 100px;
+                margin: 10px; /* Adjust margin as needed for spacing */
+                text-align: center;
+                position: relative; /* Ensure positioning context */
+            }
+
+            .delete-button {
+                position: absolute;
+                top: 0;
+                right: 0;
+                background-color: var(--ddd-theme-default-creekLight);
+                border: none;
             }
 
             .user-character {
                 text-align: center;
                 display: block;
+            }
+
+            .character-name {
+                background-color: none;
             }
 
             .input-text, .add-btn {
@@ -67,6 +89,13 @@ export class HaxcmsPartyUI extends DDD {
     } 
 
     addUser(e) {
+        
+        // Check if the userName is empty
+        if (!this.userName.trim()) {
+        alert('Please enter a name for the character.');
+        return; // Prevent further execution
+        }
+
         const randomNumber = globalThis.crypto.getRandomValues(new Uint32Array(1))[0];
     
         const user = {
@@ -74,12 +103,26 @@ export class HaxcmsPartyUI extends DDD {
           name: this.userName,
         }
 
+        // Clear the input field by setting its value to an empty string
+        const inputField = this.shadowRoot.querySelector('.input-text');
+        inputField.value = '';
+
         console.log(user);
         // push by itself is not a mutating operation
         this.users.push(user);
         this.requestUpdate();
         //this.items = [...this.items, item];
         console.log(this.users);
+    }
+
+    updateUsername(e) {
+        this.userName = e.target.value;
+    }
+
+    handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            this.addUser();
+        }
     }
     
     targetClicked(e) {
@@ -108,16 +151,18 @@ export class HaxcmsPartyUI extends DDD {
         return html`
             <div class="party-ui-wrapper">
                 <div class="input-wrapper">
-                    <input class="input-text" type="text" placeholder="Username">
+                    <input class="input-text" type="text" placeholder="Username" @input="${this.updateUsername}" @keydown="${this.handleKeyPress}">
                     <button class="add-btn" @click="${this.addUser}">Add</button>
                 </div>
 
                 <div class="user-character-wrapper">
-                    ${this.users.map((user) => html`                        
+                    ${this.users.map((user, index) => html`                        
                     <div class="character-wrapper">
+                           <button class="delete-button" @click="${() => this.removeUser(user)}">x</button>
                            <rpg-character class="user-character" seed="${user.name}"></rpg-character>
                            <p class="character-name">${user.name}</p>
                     </div>
+                    ${index > 0 && (index + 1) % 4 === 0 ? html`<div class="clear-row"></div>` : ''}
                     `)}
                 </div>
 
