@@ -24,7 +24,7 @@ export class HaxcmsPartyUI extends DDD {
 
             .party-ui-wrapper {
                 background-color: var(--ddd-theme-default-creekLight);
-                border: var(--ddd-border-xs);
+                border: var(--ddd-border-sm);
                 border-color: var(--ddd-theme-default-potential70);
                 border-radius: var(--ddd-radius-sm);
                 margin: var(--ddd-spacing-10);
@@ -35,47 +35,51 @@ export class HaxcmsPartyUI extends DDD {
             }
 
             .user-character-wrapper {
-                //display: inline-flex;
-                flex-direction: row;
-                width: 100px;
+                display: flex;
+                //flex-direction: row;
                 //align-items: center;
                 display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
+                //flex-wrap: wrap;
+                justify-content: center;   
+                padding: var(--ddd-spacing-10);                
+                margin: auto;
             }
 
             .character-wrapper {
-                width: 100px;
-                margin: 10px; /* Adjust margin as needed for spacing */
+                width: 180px;
                 text-align: center;
-                position: relative; /* Ensure positioning context */
-            }
-
-            .delete-button {
-                position: absolute;
-                top: 0;
-                right: 0;
-                background-color: var(--ddd-theme-default-creekLight);
-                border: none;
+                margin: var(--ddd-spacing-4);
+                border: var(--ddd-border-sm);
+                border-color: var(--ddd-theme-default-potential70);   
+                border-radius: var(--ddd-radius-sm);  
+                box-shadow: var(--ddd-boxShadow-sm);     
             }
 
             .user-character {
-                text-align: center;
-                display: block;
+                width: 120px;
+                margin-top: var(--ddd-spacing-4);
             }
 
             .character-name {
                 background-color: none;
+                margin: var(--ddd-spacing-2);
+                text-align: center;
+            }
+
+            .delete-button {
+                border: var(--ddd-border-xs);
+                border-color: var(--ddd-theme-default-potential70);
+                border-radius: var(--ddd-radius-xs);    
+                margin: var(--ddd-spacing-4)  
             }
 
             .input-text, .add-btn {
                 border: var(--ddd-border-xs);
                 border-color: var(--ddd-theme-default-potential70);
-                border-radius: var(--ddd-radius-xs);         
+                border-radius: var(--ddd-radius-xs);      
             }
         
             .save-btn {
-                margin: var(--ddd-spacing-2);
                 border: var(--ddd-border-xs);
                 border-color: var(--ddd-theme-default-potential70);
                 border-radius: var(--ddd-radius-xs);         
@@ -92,7 +96,7 @@ export class HaxcmsPartyUI extends DDD {
         
         // Check if the userName is empty
         if (!this.userName.trim()) {
-        alert('Please enter a name for the character.');
+        alert('Please enter a username.');
         return; // Prevent further execution
         }
 
@@ -105,7 +109,7 @@ export class HaxcmsPartyUI extends DDD {
 
         // Clear the input field by setting its value to an empty string
         const inputField = this.shadowRoot.querySelector('.input-text');
-        inputField.value = '';
+        inputField.value = "";
 
         console.log(user);
         // push by itself is not a mutating operation
@@ -113,6 +117,14 @@ export class HaxcmsPartyUI extends DDD {
         this.requestUpdate();
         //this.items = [...this.items, item];
         console.log(this.users);
+    }
+
+    removeUser(e) {
+        this.users = this.users.filter(user => user.id !== parseInt(e.target.getAttribute("data-user-id")));
+    }
+
+    saveCharacters(e) {
+
     }
 
     updateUsername(e) {
@@ -158,16 +170,16 @@ export class HaxcmsPartyUI extends DDD {
                 <div class="user-character-wrapper">
                     ${this.users.map((user, index) => html`                        
                     <div class="character-wrapper">
-                           <button class="delete-button" @click="${() => this.removeUser(user)}">x</button>
                            <rpg-character class="user-character" seed="${user.name}"></rpg-character>
                            <p class="character-name">${user.name}</p>
+                           <button class="delete-button" data-user-id="${user.id}" @click="${this.removeUser}">Delete</button>
                     </div>
                     ${index > 0 && (index + 1) % 4 === 0 ? html`<div class="clear-row"></div>` : ''}
                     `)}
                 </div>
 
-
-                <button class="save-btn">Save</button>
+                <button class="save-btn" @click="${this.saveCharacters}">Save Characters</button>
+                <p class="user-list"></p>
             </div>
         `;
     }
