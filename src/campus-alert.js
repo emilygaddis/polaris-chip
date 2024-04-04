@@ -84,7 +84,8 @@ export class CampusAlert extends DDD {
                 display: flex;
                 background-color: var(--general-background-color);
                 height: var(--open-alert-height);
-                width: 100%;
+                //width: 100%;
+                position: relative;
             }
 
             .message-full {
@@ -103,22 +104,21 @@ export class CampusAlert extends DDD {
             }
 
             .message-text-wrapper {
-                margin-left: var(--ddd-spacing-10);
+                margin-left: var(--ddd-spacing-8);
                 margin-right: var(--ddd-spacing-12);
                 font-family: var(--ddd-font-secondary);
-                font-weight: 200;
                 transform: skew(-20deg); 
             }
 
             .alert-message-text{
                 justify-content: center;
                 max-height: var(--open-alert-height);
-                overflow: auto
+                overflow: auto;
             }
 
             .alert-icon {
                 transform: skew(-20deg) scale(1.25); 
-                margin-left: 4vw;
+                margin-left: var(--ddd-spacing-14);
                 flex: 0 0 auto;
             }
 
@@ -126,7 +126,6 @@ export class CampusAlert extends DDD {
                 text-align: left;
                 margin: var(--ddd-spacing-22);
                 font-weight:var(--ddd-font-primary-bold);
-                font-size: 18px;
                 text-transform: uppercase;
             }    
 
@@ -143,24 +142,21 @@ export class CampusAlert extends DDD {
                 color: var(--message-background-color);
             }
 
-            .button-wrapper {
-
-            }
-
             .close-alert-button {
+                display: flex;
                 background-color: transparent;
                 border-color: transparent;
-                display: flex;
                 align-items: center;
                 margin-left: 2vw;
-                margin-top: 0;
                 font-family: var(--ddd-font-navigation);
-                font-size: 18px;
+
+                position: absolute;
+                top: 0;
+                right: var(--ddd-spacing-4);
             }
 
             .close-alert-button-text {
                 margin-left: 8px;
-                line-height: 14.48px;
                 font-weight: var(--ddd-font-primary-bold);
             }
 
@@ -184,7 +180,7 @@ export class CampusAlert extends DDD {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 19.2px;
+                //font-size: 19.2px;
             }
 
             .closed-alert-text {
@@ -193,9 +189,34 @@ export class CampusAlert extends DDD {
                 font-family: var(--ddd-font-primary);
             }
 
+            .date {
+                margin-bottom: 8px; /* Adjust the margin between date and time */
+            }
+
             @media (max-width: 800px) and (min-width: 200px) {
+                
+                
+
                 .alert-wrapper {
-                    display: block;
+                   --open-alert-height: 120px; 
+                }
+    
+                .alert-message {
+                    width: 500px; 
+                }
+                
+                .date-time {
+                    margin: var(--ddd-spacing-16); /* Adjust margin for smaller screens */
+                    font-size: 16px; /* Adjust font size for smaller screens */
+                }
+                
+                .alert-icon {
+                    scale: 70%;
+                    margin: 5%;
+                }
+                
+                .message-text-wrapper {
+                    font-size: 14px; /* Adjust font size for smaller screens */
                 }
             }
         `,

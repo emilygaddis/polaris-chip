@@ -42,7 +42,7 @@ export class CounterApp extends LitElement{
 
           button:focus {
             outline: none;
-            box-shadow: 15px, 5px, 5px;
+            box-shadow: var(--ddd-boxShadow-xs);
           }
 
           button:hover {

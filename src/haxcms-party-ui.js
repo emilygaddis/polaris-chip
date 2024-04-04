@@ -36,12 +36,8 @@ export class HaxcmsPartyUI extends DDD {
 
             .user-character-wrapper {
                 display: flex;
-                //flex-direction: row;
-                //align-items: center;
-                display: flex;
-                //flex-wrap: wrap;
                 justify-content: center;   
-                padding: var(--ddd-spacing-10);                
+                padding: var(--ddd-spacing-6);                
                 margin: auto;
             }
 
@@ -64,52 +60,74 @@ export class HaxcmsPartyUI extends DDD {
                 background-color: none;
                 margin: var(--ddd-spacing-2);
                 text-align: center;
+                font-family: var(--ddd-font-navigation);
             }
 
             .delete-button {
                 border: var(--ddd-border-xs);
                 border-color: var(--ddd-theme-default-potential70);
                 border-radius: var(--ddd-radius-xs);    
-                margin: var(--ddd-spacing-4)  
+                margin-bottom: var(--ddd-spacing-4);
+                font-family: var(--ddd-font-navigation);
             }
 
             .input-text, .add-btn {
                 border: var(--ddd-border-xs);
                 border-color: var(--ddd-theme-default-potential70);
                 border-radius: var(--ddd-radius-xs);      
+                font-family: var(--ddd-font-navigation);
+
+            }
+
+            .add-btn:disabled {
+                background-color: var(--ddd-theme-default-limestoneGray);
+                color: var(--ddd-theme-default-limestoneMaxLight);
+                cursor: not-allowed;
             }
         
             .save-btn {
                 border: var(--ddd-border-xs);
                 border-color: var(--ddd-theme-default-potential70);
-                border-radius: var(--ddd-radius-xs);         
+                border-radius: var(--ddd-radius-xs);  
+                font-family: var(--ddd-font-navigation);
+  
             }
 
             button:hover {
                 background-color: var(--ddd-theme-default-creekTeal);
                 color: white;
             }
+
+            .users-list {
+                margin: var(--ddd-spacing-4);
+                font-family: var(--ddd-font-navigation);
+            }
         `];
     } 
 
     addUser(e) {
-        
-        // Check if the userName is empty
-        if (!this.userName.trim()) {
-        alert('Please enter a username.');
-        return; // Prevent further execution
+        if (!/^[a-zA-Z0-9]+$/.test(this.userName.trim())) {
+            alert('Please do not use spaces or special characters');
+            return; // Prevent further execution
+        }
+
+        if (this.users.includes(this.userName)) {
+            alert("This user already exists.");
+            return;
         }
 
         const randomNumber = globalThis.crypto.getRandomValues(new Uint32Array(1))[0];
     
         const user = {
           id: randomNumber,
-          name: this.userName,
+          name: this.userName.toLowerCase().trim(),
         }
 
         // Clear the input field by setting its value to an empty string
         const inputField = this.shadowRoot.querySelector('.input-text');
         inputField.value = "";
+        this.userName = "";
+        this.shadowRoot.querySelector('.input-text').focus;
 
         console.log(user);
         // push by itself is not a mutating operation
@@ -123,8 +141,14 @@ export class HaxcmsPartyUI extends DDD {
         this.users = this.users.filter(user => user.id !== parseInt(e.target.getAttribute("data-user-id")));
     }
 
-    saveCharacters(e) {
-
+    saveCharacters() {
+        if(this.users.length === 0) {
+            alert("No Users.");
+            return;
+        }
+        this.makeItRain();
+        console.log(this.users);
+        alert("Success!");
     }
 
     updateUsername(e) {
@@ -136,6 +160,16 @@ export class HaxcmsPartyUI extends DDD {
             this.addUser();
         }
     }
+
+    makeItRain() {
+        import("@lrnwebcomponents/multiple-choice/lib/confetti-container.js").then(
+          (module) => {
+            setTimeout(() => {
+              this.shadowRoot.querySelector("#confetti").setAttribute("popped", "");
+            }, 0);
+          }
+        );
+      }
     
     targetClicked(e) {
         // what item bubbled the event
@@ -161,10 +195,11 @@ export class HaxcmsPartyUI extends DDD {
 
     render() {
         return html`
+            <confetti-container id="confetti">
             <div class="party-ui-wrapper">
                 <div class="input-wrapper">
                     <input class="input-text" type="text" placeholder="Username" @input="${this.updateUsername}" @keydown="${this.handleKeyPress}">
-                    <button class="add-btn" @click="${this.addUser}">Add</button>
+                    <button class="add-btn" @click="${this.addUser}" ?disabled="${this.userName === ""}">Add</button>
                 </div>
 
                 <div class="user-character-wrapper">
@@ -179,8 +214,11 @@ export class HaxcmsPartyUI extends DDD {
                 </div>
 
                 <button class="save-btn" @click="${this.saveCharacters}">Save Characters</button>
-                <p class="user-list"></p>
+                <div class="users-list">
+                    ${JSON.stringify(this.users, null, 2)}
+                </div>
             </div>
+            </confetti-container>
         `;
     }
 
