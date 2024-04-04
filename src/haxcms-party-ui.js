@@ -12,6 +12,7 @@ export class HaxcmsPartyUI extends DDD {
         super();
         this.users = [];
         this.userName = "";
+        this.showUsersList = false;
     }
 
     static get styles() {
@@ -43,13 +44,13 @@ export class HaxcmsPartyUI extends DDD {
             }
 
             .character-wrapper {
-                flex: 0 0 180px;
+                width: 180px;
                 text-align: center;
                 margin: var(--ddd-spacing-4);
                 border: var(--ddd-border-sm);
                 border-color: var(--ddd-theme-default-potential70);   
                 border-radius: var(--ddd-radius-sm);  
-                box-shadow: var(--ddd-boxShadow-sm);     
+                box-shadow: var(--ddd-boxShadow-sm);
             }
 
             .user-character {
@@ -90,6 +91,7 @@ export class HaxcmsPartyUI extends DDD {
                 border-color: var(--ddd-theme-default-potential70);
                 border-radius: var(--ddd-radius-xs);  
                 font-family: var(--ddd-font-navigation);
+                margin-bottom: var(--ddd-spacing-4);
             }
 
             button:hover {
@@ -98,8 +100,13 @@ export class HaxcmsPartyUI extends DDD {
             }
 
             .users-list {
-                margin: var(--ddd-spacing-4);
+                margin-bottom: var(--ddd-spacing-4);
                 font-family: var(--ddd-font-navigation);
+            }
+
+            #success-text {
+                margin-bottom: var(--ddd-spacing-2);
+                margin-top: var(--ddd-spacing-0);
             }
         `];
     } 
@@ -107,10 +114,10 @@ export class HaxcmsPartyUI extends DDD {
     addUser(e) {
         if (!/^[a-zA-Z0-9]+$/.test(this.userName.trim())) {
             alert('Please do not use spaces or special characters');
-            return; // Prevent further execution
+            return;
         }
 
-        if (this.users.includes(this.userName)) {
+        if (this.users.some(user => user.name === this.userName)) {
             alert("This user already exists.");
             return;
         }
@@ -141,13 +148,14 @@ export class HaxcmsPartyUI extends DDD {
     }
 
     saveCharacters() {
+        /*
         if(this.users.length === 0) {
             alert("No Users.");
             return;
         }
+        */
         this.makeItRain();
         console.log(this.users);
-        alert("Success!");
     }
 
     updateUsername(e) {
@@ -157,6 +165,18 @@ export class HaxcmsPartyUI extends DDD {
     handleKeyPress(e) {
         if (e.key === 'Enter') {
             this.addUser();
+        }
+    }
+
+    toggleUsersList(e) {
+        const target = e.target;
+    
+        if (target.classList.contains('save-btn')) {
+            // If the "Save Characters" button is clicked, set showUsersList to true
+            this.showUsersList = true;
+        } else {
+            // If anything else on the UI is clicked, set showUsersList to false
+            this.showUsersList = false;
         }
     }
 
@@ -195,7 +215,7 @@ export class HaxcmsPartyUI extends DDD {
     render() {
         return html`
             <confetti-container id="confetti">
-            <div class="party-ui-wrapper">
+            <div class="party-ui-wrapper" @click="${this.toggleUsersList}">
                 <div class="input-wrapper">
                     <input class="input-text" type="text" placeholder="Username" @input="${this.updateUsername}" @keydown="${this.handleKeyPress}">
                     <button class="add-btn" @click="${this.addUser}" ?disabled="${this.userName === ""}">Add</button>
@@ -208,14 +228,17 @@ export class HaxcmsPartyUI extends DDD {
                            <p class="character-name">${user.name}</p>
                            <button class="delete-button" data-user-id="${user.id}" @click="${this.removeUser}">Delete</button>
                     </div>
-                    ${index > 0 && (index + 1) % 4 === 0 ? html`<div class="clear-row"></div>` : ''}
                     `)}
                 </div>
 
                 <button class="save-btn" @click="${this.saveCharacters}">Save Characters</button>
-                <div class="users-list">
-                    ${JSON.stringify(this.users, null, 2)}
-                </div>
+                <!-- Users list (conditionally rendered) -->
+                ${this.showUsersList ? html`
+                    <p id="success-text">SUCCESS!</p>
+                    <div class="users-list">
+                        ${JSON.stringify(this.users, null, 2)}
+                    </div>
+                ` : ''}
             </div>
             </confetti-container>
         `;
@@ -226,6 +249,7 @@ export class HaxcmsPartyUI extends DDD {
             ...super.properties,
             users: { type: Array },
             userName: { type: String },
+            showUsersList: { type: Boolean },
         };
     }
 

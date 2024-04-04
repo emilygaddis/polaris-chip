@@ -202,7 +202,7 @@ export class CampusAlert extends DDD {
                 }
     
                 .alert-message {
-                    width: 500px; 
+                    width: 70%; 
                 }
                 
                 .date-time {
