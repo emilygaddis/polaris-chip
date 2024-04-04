@@ -36,13 +36,14 @@ export class HaxcmsPartyUI extends DDD {
 
             .user-character-wrapper {
                 display: flex;
+                flex-wrap: wrap;
                 justify-content: center;   
-                padding: var(--ddd-spacing-6);                
+                padding: var(--ddd-spacing-4);                
                 margin: auto;
             }
 
             .character-wrapper {
-                width: 180px;
+                flex: 0 0 180px;
                 text-align: center;
                 margin: var(--ddd-spacing-4);
                 border: var(--ddd-border-sm);
@@ -58,9 +59,9 @@ export class HaxcmsPartyUI extends DDD {
 
             .character-name {
                 background-color: none;
-                margin: var(--ddd-spacing-2);
-                text-align: center;
+                margin: var(--ddd-spacing-4);
                 font-family: var(--ddd-font-navigation);
+                overflow-x: auto;
             }
 
             .delete-button {
@@ -76,7 +77,6 @@ export class HaxcmsPartyUI extends DDD {
                 border-color: var(--ddd-theme-default-potential70);
                 border-radius: var(--ddd-radius-xs);      
                 font-family: var(--ddd-font-navigation);
-
             }
 
             .add-btn:disabled {
@@ -90,7 +90,6 @@ export class HaxcmsPartyUI extends DDD {
                 border-color: var(--ddd-theme-default-potential70);
                 border-radius: var(--ddd-radius-xs);  
                 font-family: var(--ddd-font-navigation);
-  
             }
 
             button:hover {
