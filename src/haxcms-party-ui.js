@@ -112,11 +112,13 @@ export class HaxcmsPartyUI extends DDD {
     } 
 
     addUser(e) {
+        // prohibits using special characters
         if (!/^[a-zA-Z0-9]+$/.test(this.userName.trim())) {
             alert('Please do not use spaces or special characters');
             return;
         }
 
+        // prohibits duplicate usernames
         if (this.users.some(user => user.name === this.userName)) {
             alert("This user already exists.");
             return;
@@ -133,7 +135,7 @@ export class HaxcmsPartyUI extends DDD {
         const inputField = this.shadowRoot.querySelector('.input-text');
         inputField.value = "";
         this.userName = "";
-        this.shadowRoot.querySelector('.input-text').focus;
+        this.shadowRoot.querySelector('.input-text').focus;   // refocuses cursor on textboz
 
         console.log(user);
         // push by itself is not a mutating operation
@@ -144,16 +146,11 @@ export class HaxcmsPartyUI extends DDD {
     }
 
     removeUser(e) {
+        // deletes a user based on the user's id
         this.users = this.users.filter(user => user.id !== parseInt(e.target.getAttribute("data-user-id")));
     }
 
     saveCharacters() {
-        /*
-        if(this.users.length === 0) {
-            alert("No Users.");
-            return;
-        }
-        */
         this.makeItRain();
         console.log(this.users);
     }
@@ -163,6 +160,7 @@ export class HaxcmsPartyUI extends DDD {
     }
 
     handleKeyPress(e) {
+        // make it so the enter button adds a user as well
         if (e.key === 'Enter') {
             this.addUser();
         }

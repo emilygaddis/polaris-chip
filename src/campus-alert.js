@@ -218,7 +218,7 @@ export class CampusAlert extends DDD {
                 .message-text-wrapper {
                     font-size: 14px; /* Adjust font size for smaller screens */
                 }
-            }
+            }s
         `,
       ]
     }
